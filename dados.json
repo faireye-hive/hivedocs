@@ -1,0 +1,1722 @@
+{
+  "account_by_key_api.get_key_references": {
+    "label": "Get UserName from PubKey",
+    "description": "Returns all accounts that have the key associated with their owner or active authorities.",
+    "params": {
+      "keys": ["STM6vJmrwaX5TjgTS9dPH8KsArso5m91fVodJvv91j7G765wqcNM9"]
+    }
+  },
+
+  "account_history_api.enum_virtual_ops": {
+    "label": "Enum Virtual Ops",
+    "description": "Allows specifying a range of blocks to retrieve virtual operations for.",
+    "params": {
+      "block_range_begin": 1,
+      "block_range_end": 100,
+      "include_reversible": true,
+      "group_by_block": true,
+      "operation_begin": 0,
+      "limit": 100,
+      "filter": 0
+    }
+  },
+  "account_history_api.get_account_history": {
+    "label": "Get Account History",
+    "description": "Returns a history of all operations for a given account.",
+    "params": {
+      "account": "hiveio",
+      "start": -1,
+      "limit": 10,
+      "include_reversible": true,
+      "operation_filter_low": 0,
+      "operation_filter_high": 0
+    }
+  },
+  "account_history_api.get_ops_in_block": {
+    "label": "Get Ops In Block",
+    "description": "Returns all operations contained in a block.",
+    "params": {
+      "block_num": 50000000,
+      "only_virtual": false,
+      "include_reversible": true
+    }
+  },
+  "account_history_api.get_transaction": {
+    "label": "Get Transaction",
+    "description": "Returns the details of a transaction based on a transaction ID, including signatures, operations, and the block number it was included in.",
+    "params": {
+      "id": "0000000000000000000000000000000000000000",
+      "include_reversible": true
+    }
+  },
+
+  "block_api.get_block": {
+    "label": "Get Block by Number",
+    "description": "Retrieve a full, signed block",
+    "params": {
+      "block_num": 50000000
+    }
+  },
+  "block_api.get_block_header": {
+    "label": "Get Block Header",
+    "description": "Retrieve block header information",
+    "params": {
+      "block_num": 50000000
+    }
+  },
+  "block_api.get_block_range": {
+    "label": "Get Block Range",
+    "description": "Retrieve a range of full, signed blocks",
+    "params": {
+      "starting_block_num": 50000000,
+      "count": 10
+    }
+  },
+  "bridge.account_notifications": {
+    "label": "Account Notifications",
+    "description": "Account notifications. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio",
+      "limit": 10,
+      "last_id": null
+    }
+  },
+  "bridge.does_user_follow_any_lists": {
+    "label": "Does User Follow Any Lists",
+    "description": "Checks if a given observer follows any blacklists or mute lists. (Supported by Hivemind)",
+    "params": {
+      "observer": "hiveio"
+    }
+  },
+  "bridge.get_account_posts": {
+    "label": "Get Account Posts",
+    "description": "Lists posts related to a given account. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio",
+      "sort": "posts",
+      "limit": 10,
+      "start_author": null,
+      "start_permlink": null,
+      "observer": null
+    }
+  },
+  "bridge.get_community": {
+    "label": "Get Community",
+    "description": "Get community details. (Supported by Hivemind)",
+    "params": {
+      "name": "hive-148441",
+      "observer": null
+    }
+  },
+  "bridge.get_community_context": {
+    "label": "Get Community Context",
+    "description": "Gets the role, subscription status, and title for a given account in a given community. (Supported by Hivemind)",
+    "params": {
+      "name": "hive-148441",
+      "account": "hiveio"
+    }
+  },
+  "bridge.get_discussion": {
+    "label": "Get Discussion",
+    "description": "Gives a flattened discussion tree starting at given post. (Supported by Hivemind)",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost",
+      "observer": null
+    }
+  },
+  "bridge.get_follow_list": {
+    "label": "Get Follow List",
+    "description": "Returns blacklisted/muted accounts or list of blacklists/mute lists followed by a given observer. (Supported by Hivemind)",
+    "params": {
+      "observer": "hiveio",
+      "list_type": "blacklisted",
+      "last_account": null,
+      "limit": 10
+    }
+  },
+  "bridge.get_payout_stats": {
+    "label": "Get Payout Stats",
+    "description": "Lists communities ordered by payout with stats (total payout, number of posts and authors). (Supported by Hivemind)",
+    "params": {
+      "limit": 10,
+      "observer": null
+    }
+  },
+  "bridge.get_post": {
+    "label": "Get Post",
+    "description": "Gives single selected post. (Supported by Hivemind)",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "bridge.get_post_header": {
+    "label": "Get Post Header",
+    "description": "Gives very basic information on given post. (Supported by Hivemind)",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "bridge.get_profile": {
+    "label": "Get Profile",
+    "description": "Gets profile. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "bridge.get_profiles": {
+    "label": "Get Profiles",
+    "description": "Gets a list of profiles. (Supported by Hivemind)",
+    "params": {
+      "accounts": ["hiveio", "blocktrades"]
+    }
+  },
+  "bridge.get_ranked_posts": {
+    "label": "Get Ranked Posts",
+    "description": "Get ranked posts. (Supported by Hivemind)",
+    "params": {
+      "sort": "trending",
+      "tag": "",
+      "observer": null,
+      "limit": 10,
+      "start_author": null,
+      "start_permlink": null
+    }
+  },
+  "bridge.get_relationship_between_accounts": {
+    "label": "Get Relationship Between Accounts",
+    "description": "Tells what relations connect given accounts from the perspective of first account. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio",
+      "targets": ["blocktrades"]
+    }
+  },
+  "bridge.get_trending_topics": {
+    "label": "Get Trending Topics",
+    "description": "Gets a list of trending communities. (Supported by Hivemind)",
+    "params": {
+      "limit": 10,
+      "observer": null
+    }
+  },
+  "bridge.list_all_subscriptions": {
+    "label": "List All Subscriptions",
+    "description": "List all subscriptions, titles, and roles to a community for an account. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "bridge.list_communities": {
+    "label": "List Communities",
+    "description": "Gets community. (Supported by Hivemind)",
+    "params": {
+      "last": "",
+      "limit": 10,
+      "query": null,
+      "observer": null,
+      "sort": "rank"
+    }
+  },
+  "bridge.list_community_roles": {
+    "label": "List Community Roles",
+    "description": "List community roles and labels for each account in the community. (Supported by Hivemind)",
+    "params": {
+      "community": "hive-148441",
+      "last": null,
+      "limit": 10,
+      "role": null
+    }
+  },
+  "bridge.list_muted_reasons_enum": {
+    "label": "List Muted Reasons Enum",
+    "description": "Gets a muted reasons enum map. (Supported by Hivemind)",
+    "params": {}
+  },
+  "bridge.list_pop_communities": {
+    "label": "List Pop Communities",
+    "description": "Gets a list of popular communities. (Supported by Hivemind)",
+    "params": {
+      "last": "",
+      "limit": 10,
+      "observer": null
+    }
+  },
+  "bridge.list_subscribers": {
+    "label": "List Subscribers",
+    "description": "Gets a list of subscribers for a given community. (Supported by Hivemind)",
+    "params": {
+      "community": "hive-148441",
+      "last": null,
+      "limit": 10,
+      "role": null
+    }
+  },
+  "bridge.normalize_post": {
+    "label": "Normalize Post",
+    "description": "Transforms legacy post objects into a new standardized format. (Supported by Hivemind)",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "bridge.post_notifications": {
+    "label": "Post Notifications",
+    "description": "Gets a post notifications. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio",
+      "limit": 10,
+      "last_id": null
+    }
+  },
+  "bridge.unread_notifications": {
+    "label": "Unread Notifications",
+    "description": "Gets a count of unread notifications for an account. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.broadcast_transaction": {
+    "label": "Broadcast Transaction",
+    "description": "Broadcasts a signed transaction to the network",
+    "params": {
+      "signed_transaction": {
+        "ref_block_num": 0,
+        "ref_block_prefix": 0,
+        "expiration": "2024-01-01T00:00:00",
+        "operations": [],
+        "extensions": [],
+        "signatures": []
+      }
+    }
+  },
+  "condenser_api.broadcast_transaction_synchronous": {
+    "label": "Broadcast Transaction Synchronous",
+    "description": "Broadcasts a signed transaction synchronously",
+    "params": {
+      "signed_transaction": {
+        "ref_block_num": 0,
+        "ref_block_prefix": 0,
+        "expiration": "2024-01-01T00:00:00",
+        "operations": [],
+        "extensions": [],
+        "signatures": []
+      }
+    }
+  },
+  "condenser_api.find_proposals": {
+    "label": "Find Proposals by Number",
+    "description": "Finds proposals by proposal IDs",
+    "params": {
+      "proposal_ids": [200]
+    }
+  },
+  "condenser_api.find_rc_accounts": {
+    "label": "Get Rc from Accounts",
+    "description": "Finds RC accounts by account names",
+    "params": {
+      "accounts": ["hiveio", "blocktrades"]
+    }
+  },
+  "condenser_api.find_recurrent_transfers": {
+    "label": "Find Recurrent Transfers",
+    "description": "Finds recurrent transfers",
+    "params": {
+      "from": "hiveio"
+    }
+  },
+  "condenser_api.get_account_count": {
+    "label": "Get Account Count",
+    "description": "Returns total number of accounts on the blockchain",
+    "params": {}
+  },
+  "condenser_api.get_account_history": {
+    "label": "Get Account History",
+    "description": "Returns account history",
+    "params": {
+      "account": "hiveio",
+      "start": -1,
+      "limit": 10
+    }
+  },
+  "condenser_api.get_account_references": {
+    "label": "Get Account References",
+    "description": "Returns account references",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_account_reputations": {
+    "label": "Get Account Reputations",
+    "description": "Returns account reputations",
+    "params": {
+      "account_lower_bound": "",
+      "limit": 10
+    }
+  },
+  "condenser_api.get_account_votes": {
+    "label": "Get Account Votes",
+    "description": "Returns votes cast by an account",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_accounts": {
+    "label": "Get Accounts",
+    "description": "Returns account information",
+    "params": {
+      "accounts": ["hiveio", "blocktrades"]
+    }
+  },
+  "condenser_api.get_active_votes": {
+    "label": "Get Active Votes",
+    "description": "Returns active votes for a post",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "condenser_api.get_active_witnesses": {
+    "label": "Get Active Witnesses",
+    "description": "Returns list of active witnesses",
+    "params": {}
+  },
+  "condenser_api.get_block": {
+    "label": "Get Block",
+    "description": "Returns block information",
+    "params": {
+      "block_num": 50000000
+    }
+  },
+  "condenser_api.get_block_header": {
+    "label": "Get Block Header",
+    "description": "Returns block header",
+    "params": {
+      "block_num": 50000000
+    }
+  },
+  "condenser_api.get_blog": {
+    "label": "Get Blog",
+    "description": "Returns blog entries for an account",
+    "params": {
+      "account": "hiveio",
+      "start_entry_id": 0,
+      "limit": 10
+    }
+  },
+  "condenser_api.get_blog_entries": {
+    "label": "Get Blog Entries",
+    "description": "Returns blog entries",
+    "params": {
+      "account": "hiveio",
+      "start_entry_id": 0,
+      "limit": 10
+    }
+  },
+  "condenser_api.get_chain_properties": {
+    "label": "Get Chain Properties",
+    "description": "Returns chain properties",
+    "params": {}
+  },
+  "condenser_api.get_collateralized_conversion_requests": {
+    "label": "Get Collateralized Conversion Requests",
+    "description": "Returns collateralized conversion requests",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_comment_discussions_by_payout": {
+    "label": "Get Comment Discussions By Payout",
+    "description": "Returns comment discussions sorted by payout",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_config": {
+    "label": "Get Config",
+    "description": "Returns blockchain configuration",
+    "params": {}
+  },
+  "condenser_api.get_content": {
+    "label": "Get Content",
+    "description": "Returns content (post/comment)",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "condenser_api.get_content_replies": {
+    "label": "Get Content Replies",
+    "description": "Returns replies to content",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "condenser_api.get_conversion_requests": {
+    "label": "Get Conversion Requests",
+    "description": "Returns conversion requests",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_current_median_history_price": {
+    "label": "Get Current Median History Price",
+    "description": "Returns current median history price",
+    "params": {}
+  },
+  "condenser_api.get_discussions_by_active": {
+    "label": "Get Discussions By Active",
+    "description": "Returns discussions sorted by active",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_author_before_date": {
+    "label": "Get Discussions By Author Before Date",
+    "description": "Returns discussions by author before date",
+    "params": {
+      "author": "hiveio",
+      "start_permlink": "",
+      "before_date": "2024-01-01T00:00:00",
+      "limit": 10
+    }
+  },
+  "condenser_api.get_discussions_by_blog": {
+    "label": "Get Discussions By Blog",
+    "description": "Returns discussions by blog",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_cashout": {
+    "label": "Get Discussions By Cashout",
+    "description": "Returns discussions by cashout time",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_children": {
+    "label": "Get Discussions By Children",
+    "description": "Returns discussions by children count",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_comments": {
+    "label": "Get Discussions By Comments",
+    "description": "Returns discussions by comments count",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_created": {
+    "label": "Get Discussions By Created",
+    "description": "Returns discussions by creation time",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_feed": {
+    "label": "Get Discussions By Feed",
+    "description": "Returns discussions by feed",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_hot": {
+    "label": "Get Discussions By Hot",
+    "description": "Returns discussions by hot",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_promoted": {
+    "label": "Get Discussions By Promoted",
+    "description": "Returns discussions by promoted amount",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_trending": {
+    "label": "Get Discussions By Trending",
+    "description": "Returns discussions by trending",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_discussions_by_votes": {
+    "label": "Get Discussions By Votes",
+    "description": "Returns discussions by votes",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_dynamic_global_properties": {
+    "label": "Get Dynamic Global Properties",
+    "description": "Returns dynamic global properties",
+    "params": {}
+  },
+  "condenser_api.get_escrow": {
+    "label": "Get Escrow",
+    "description": "Returns escrow information",
+    "params": {
+      "from": "hiveio",
+      "escrow_id": 0
+    }
+  },
+  "condenser_api.get_expiring_vesting_delegations": {
+    "label": "Get Expiring Vesting Delegations",
+    "description": "Returns expiring vesting delegations",
+    "params": {
+      "account": "hiveio",
+      "start": ["1970-01-01T00:00:00"],
+      "limit": 10
+    }
+  },
+  "condenser_api.get_feed": {
+    "label": "Get Feed",
+    "description": "Returns feed for an account",
+    "params": {
+      "account": "hiveio",
+      "start_entry_id": 0,
+      "limit": 10
+    }
+  },
+  "condenser_api.get_feed_entries": {
+    "label": "Get Feed Entries",
+    "description": "Returns feed entries",
+    "params": {
+      "account": "hiveio",
+      "start_entry_id": 0,
+      "limit": 10
+    }
+  },
+  "condenser_api.get_feed_history": {
+    "label": "Get Feed History",
+    "description": "Returns feed history",
+    "params": {}
+  },
+  "condenser_api.get_follow_count": {
+    "label": "Get Follow Count",
+    "description": "Returns follow count for an account",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_followers": {
+    "label": "Get Followers",
+    "description": "Returns followers of an account",
+    "params": {
+      "account": "hiveio",
+      "start": "",
+      "limit": 10,
+      "type": "blog"
+    }
+  },
+  "condenser_api.get_following": {
+    "label": "Get Following",
+    "description": "Returns accounts followed by an account",
+    "params": {
+      "account": "hiveio",
+      "start": "",
+      "limit": 10,
+      "type": "blog"
+    }
+  },
+  "condenser_api.get_hardfork_version": {
+    "label": "Get Hardfork Version",
+    "description": "Returns hardfork version",
+    "params": {}
+  },
+  "condenser_api.get_key_references": {
+    "label": "Get Key References",
+    "description": "Returns accounts associated with public keys",
+    "params": {
+      "keys": ["STM6vJmrwaX5TjgTS9dPH8KsArso5m91fVodJvv91j7G765wqcNM9"]
+    }
+  },
+  "condenser_api.get_market_history": {
+    "label": "Get Market History",
+    "description": "Returns market history",
+    "params": {
+      "bucket_seconds": 3600,
+      "start": "1970-01-01T00:00:00",
+      "end": "2024-01-01T00:00:00"
+    }
+  },
+  "condenser_api.get_market_history_buckets": {
+    "label": "Get Market History Buckets",
+    "description": "Returns market history buckets",
+    "params": {}
+  },
+  "condenser_api.get_next_scheduled_hardfork": {
+    "label": "Get Next Scheduled Hardfork",
+    "description": "Returns next scheduled hardfork",
+    "params": {}
+  },
+  "condenser_api.get_open_orders": {
+    "label": "Get Open Orders",
+    "description": "Returns open orders for an account",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_ops_in_block": {
+    "label": "Get Ops In Block",
+    "description": "Returns operations in a block",
+    "params": {
+      "block_num": 50000000,
+      "only_virtual": false
+    }
+  },
+  "condenser_api.get_order_book": {
+    "label": "Get Order Book",
+    "description": "Returns order book",
+    "params": {
+      "limit": 10
+    }
+  },
+  "condenser_api.get_owner_history": {
+    "label": "Get Owner History",
+    "description": "Returns owner history for an account",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_post_discussions_by_payout": {
+    "label": "Get Post Discussions By Payout",
+    "description": "Returns post discussions sorted by payout",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "condenser_api.get_potential_signatures": {
+    "label": "Get Potential Signatures",
+    "description": "Returns potential signatures for a transaction",
+    "params": {
+      "trx": {}
+    }
+  },
+  "condenser_api.get_reblogged_by": {
+    "label": "Get Reblogged By",
+    "description": "Returns accounts that reblogged a post",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "condenser_api.get_recent_trades": {
+    "label": "Get Recent Trades",
+    "description": "Returns recent trades",
+    "params": {
+      "limit": 10
+    }
+  },
+  "condenser_api.get_recovery_request": {
+    "label": "Get Recovery Request",
+    "description": "Returns recovery request for an account",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_replies_by_last_update": {
+    "label": "Get Replies By Last Update",
+    "description": "Returns replies sorted by last update",
+    "params": {
+      "start_author": "hiveio",
+      "start_permlink": "firstpost",
+      "limit": 10
+    }
+  },
+  "condenser_api.get_required_signatures": {
+    "label": "Get Required Signatures",
+    "description": "Returns required signatures for a transaction",
+    "params": {
+      "trx": {}
+    }
+  },
+  "condenser_api.get_reward_fund": {
+    "label": "Get Reward Fund",
+    "description": "Returns reward fund information",
+    "params": {
+      "name": "post"
+    }
+  },
+  "condenser_api.get_savings_withdraw_from": {
+    "label": "Get Savings Withdraw From",
+    "description": "Returns savings withdrawals from an account",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_savings_withdraw_to": {
+    "label": "Get Savings Withdraw To",
+    "description": "Returns savings withdrawals to an account",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_state": {
+    "label": "Get State",
+    "description": "Returns blockchain state",
+    "params": {
+      "path": "/@hiveio"
+    }
+  },
+  "condenser_api.get_tags_used_by_author": {
+    "label": "Get Tags Used By Author",
+    "description": "Returns tags used by an author",
+    "params": {
+      "author": "hiveio"
+    }
+  },
+  "condenser_api.get_ticker": {
+    "label": "Get Ticker",
+    "description": "Returns market ticker",
+    "params": {}
+  },
+  "condenser_api.get_trade_history": {
+    "label": "Get Trade History",
+    "description": "Returns trade history",
+    "params": {
+      "start": "1970-01-01T00:00:00",
+      "end": "2024-01-01T00:00:00",
+      "limit": 10
+    }
+  },
+  "condenser_api.get_transaction": {
+    "label": "Get Transaction",
+    "description": "Returns transaction by ID",
+    "params": {
+      "transaction_id": "0000000000000000000000000000000000000000"
+    }
+  },
+  "condenser_api.get_transaction_hex": {
+    "label": "Get Transaction Hex",
+    "description": "Returns transaction hex",
+    "params": {
+      "trx": {}
+    }
+  },
+  "condenser_api.get_trending_tags": {
+    "label": "Get Trending Tags",
+    "description": "Returns trending tags",
+    "params": {
+      "after_tag": "",
+      "limit": 10
+    }
+  },
+  "condenser_api.get_version": {
+    "label": "Get Version",
+    "description": "Returns node version",
+    "params": {}
+  },
+  "condenser_api.get_vesting_delegations": {
+    "label": "Get Vesting Delegations",
+    "description": "Returns vesting delegations",
+    "params": {
+      "account": "hiveio",
+      "from": "",
+      "limit": 10
+    }
+  },
+  "condenser_api.get_volume": {
+    "label": "Get Volume",
+    "description": "Returns market volume",
+    "params": {}
+  },
+  "condenser_api.get_withdraw_routes": {
+    "label": "Get Withdraw Routes",
+    "description": "Returns withdraw routes",
+    "params": {
+      "account": "hiveio",
+      "withdraw_route_type": "all"
+    }
+  },
+  "condenser_api.get_witness_by_account": {
+    "label": "Get Witness By Account",
+    "description": "Returns witness by account",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "condenser_api.get_witness_count": {
+    "label": "Get Witness Count",
+    "description": "Returns witness count",
+    "params": {}
+  },
+  "condenser_api.get_witness_schedule": {
+    "label": "Get Witness Schedule",
+    "description": "Returns witness schedule",
+    "params": {}
+  },
+  "condenser_api.get_witnesses": {
+    "label": "Get Witnesses",
+    "description": "Returns witnesses by ID",
+    "params": {
+      "witness_ids": [0]
+    }
+  },
+  "condenser_api.get_witnesses_by_vote": {
+    "label": "Get Witnesses By Vote",
+    "description": "Returns witnesses sorted by vote",
+    "params": {
+      "from": "",
+      "limit": 10
+    }
+  },
+  "condenser_api.is_known_transaction": {
+    "label": "Is Known Transaction",
+    "description": "Checks if transaction is known",
+    "params": {
+      "transaction_id": "0000000000000000000000000000000000000000"
+    }
+  },
+  "condenser_api.list_proposal_votes": {
+    "label": "List Proposal Votes",
+    "description": "Returns proposal votes",
+    "params": {
+      "start": ["", 0],
+      "limit": 10,
+      "order": "by_voter_proposal",
+      "order_direction": "ascending",
+      "status": "all"
+    }
+  },
+  "condenser_api.list_proposals": {
+    "label": "List Proposals",
+    "description": "Returns proposals",
+    "params": {
+      "start": ["", 0],
+      "limit": 10,
+      "order": "by_creator",
+      "order_direction": "ascending",
+      "status": "all"
+    }
+  },
+  "condenser_api.list_rc_accounts": {
+    "label": "List Rc Accounts",
+    "description": "Returns RC accounts",
+    "params": {
+      "start": null,
+      "limit": 10
+    }
+  },
+  "condenser_api.list_rc_direct_delegations": {
+    "label": "List Rc Direct Delegations",
+    "description": "Returns RC direct delegations",
+    "params": {
+      "start": ["", ""],
+      "limit": 10
+    }
+  },
+  "condenser_api.lookup_account_names": {
+    "label": "Lookup Account Names",
+    "description": "Returns account information by names",
+    "params": {
+      "accounts": ["hiveio", "blocktrades"]
+    }
+  },
+  "condenser_api.lookup_accounts": {
+    "label": "Lookup Accounts",
+    "description": "Returns accounts by prefix",
+    "params": {
+      "lower_bound": "hive",
+      "limit": 10
+    }
+  },
+  "condenser_api.lookup_witness_accounts": {
+    "label": "Lookup Witness Accounts",
+    "description": "Returns witness accounts by prefix",
+    "params": {
+      "lower_bound": "",
+      "limit": 10
+    }
+  },
+  "condenser_api.verify_account_authority": {
+    "label": "Verify Account Authority",
+    "description": "Verifies account authority",
+    "params": {
+      "account": "hiveio",
+      "signers": []
+    }
+  },
+  "condenser_api.verify_authority": {
+    "label": "Verify Authority",
+    "description": "Verifies transaction authority",
+    "params": {
+      "trx": {}
+    }
+  },
+  "database_api.find_account_recovery_requests": {
+    "label": "Find Account Recovery Requests",
+    "description": "Finds account recovery requests",
+    "params": {
+      "accounts": ["hiveio"]
+    }
+  },
+  "database_api.find_accounts": {
+    "label": "Find Accounts",
+    "description": "Finds accounts",
+    "params": {
+      "accounts": ["hiveio", "blocktrades"]
+    }
+  },
+  "database_api.find_change_recovery_account_requests": {
+    "label": "Find Change Recovery Account Requests",
+    "description": "Finds change recovery account requests",
+    "params": {
+      "accounts": ["hiveio"]
+    }
+  },
+  "database_api.find_collateralized_conversion_requests": {
+    "label": "Find Collateralized Conversion Requests",
+    "description": "Finds collateralized conversion requests",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "database_api.find_comments": {
+    "label": "Find Comments",
+    "description": "Finds comments",
+    "params": {
+      "comments": [["hiveio", "around-the-hive-reflections"]]
+    }
+  },
+  "database_api.find_decline_voting_rights_requests": {
+    "label": "Find Decline Voting Rights Requests",
+    "description": "Finds decline voting rights requests",
+    "params": {
+      "accounts": ["hiveio"]
+    }
+  },
+  "database_api.find_escrows": {
+    "label": "Find Escrows",
+    "description": "Finds escrows",
+    "params": {
+      "from": "hiveio"
+    }
+  },
+  "database_api.find_hbd_conversion_requests": {
+    "label": "Find Hbd Conversion Requests",
+    "description": "Finds HBD conversion requests",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "database_api.find_limit_orders": {
+    "label": "Find Limit Orders",
+    "description": "Finds limit orders",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "database_api.find_owner_histories": {
+    "label": "Find Owner Histories",
+    "description": "Finds owner histories",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "database_api.find_proposals": {
+    "label": "Find Proposals",
+    "description": "Finds proposals",
+    "params": {
+      "proposal_ids": [200]
+    }
+  },
+  "database_api.find_recurrent_transfers": {
+    "label": "Find Recurrent Transfers",
+    "description": "Finds recurrent transfers",
+    "params": {
+      "from": "hiveio"
+    }
+  },
+  "database_api.find_savings_withdrawals": {
+    "label": "Find Savings Withdrawals",
+    "description": "Finds savings withdrawals",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "database_api.find_vesting_delegation_expirations": {
+    "label": "Find Vesting Delegation Expirations",
+    "description": "Finds vesting delegation expirations",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "database_api.find_vesting_delegations": {
+    "label": "Find Vesting Delegations",
+    "description": "Finds vesting delegations",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "database_api.find_votes": {
+    "label": "Find Votes",
+    "description": "Finds votes",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "database_api.find_withdraw_vesting_routes": {
+    "label": "Find Withdraw Vesting Routes",
+    "description": "Finds withdraw vesting routes",
+    "params": {
+      "account": "hiveio",
+      "order": "from",
+      "limit": 10
+    }
+  },
+  "database_api.find_witnesses": {
+    "label": "Find Witnesses",
+    "description": "Finds witnesses",
+    "params": {
+      "owners": ["hiveio"]
+    }
+  },
+  "database_api.get_active_witnesses": {
+    "label": "Get Active Witnesses",
+    "description": "Returns active witnesses",
+    "params": {}
+  },
+  "database_api.get_comment_pending_payouts": {
+    "label": "Get Comment Pending Payouts",
+    "description": "Returns comment pending payouts",
+    "params": {
+      "comments": [["hiveio", "firstpost"]]
+    }
+  },
+  "database_api.get_config": {
+    "label": "Get Config",
+    "description": "Returns blockchain configuration",
+    "params": {}
+  },
+  "database_api.get_current_price_feed": {
+    "label": "Get Current Price Feed",
+    "description": "Returns current price feed",
+    "params": {}
+  },
+  "database_api.get_dynamic_global_properties": {
+    "label": "Get Dynamic Global Properties",
+    "description": "Returns dynamic global properties",
+    "params": {}
+  },
+  "database_api.get_feed_history": {
+    "label": "Get Feed History",
+    "description": "Returns feed history",
+    "params": {}
+  },
+  "database_api.get_hardfork_properties": {
+    "label": "Get Hardfork Properties",
+    "description": "Returns hardfork properties",
+    "params": {}
+  },
+  "database_api.get_order_book": {
+    "label": "Get Order Book",
+    "description": "Returns order book",
+    "params": {
+      "limit": 10
+    }
+  },
+  "database_api.get_potential_signatures": {
+    "label": "Get Potential Signatures",
+    "description": "Returns potential signatures",
+    "params": {
+      "trx": {}
+    }
+  },
+  "database_api.get_required_signatures": {
+    "label": "Get Required Signatures",
+    "description": "Returns required signatures",
+    "params": {
+      "trx": {}
+    }
+  },
+  "database_api.get_reward_funds": {
+    "label": "Get Reward Funds",
+    "description": "Returns reward funds",
+    "params": {
+      "names": ["post", "comment"]
+    }
+  },
+  "database_api.get_transaction_hex": {
+    "label": "Get Transaction Hex",
+    "description": "Returns transaction hex",
+    "params": {
+      "trx": {}
+    }
+  },
+  "database_api.get_version": {
+    "label": "Get Version",
+    "description": "Returns node version",
+    "params": {}
+  },
+  "database_api.get_witness_schedule": {
+    "label": "Get Witness Schedule",
+    "description": "Returns witness schedule",
+    "params": {}
+  },
+  "database_api.is_known_transaction": {
+    "label": "Is Known Transaction",
+    "description": "Checks if transaction is known",
+    "params": {
+      "transaction_id": "0000000000000000000000000000000000000000"
+    }
+  },
+  "database_api.list_account_recovery_requests": {
+    "label": "List Account Recovery Requests",
+    "description": "Returns account recovery requests",
+    "params": {
+      "start": null,
+      "limit": 10,
+      "order": "by_account"
+    }
+  },
+  "database_api.list_accounts": {
+    "label": "List Accounts",
+    "description": "Returns accounts",
+    "params": {
+      "start": "",
+      "limit": 10,
+      "order": "by_name"
+    }
+  },
+  "database_api.list_change_recovery_account_requests": {
+    "label": "List Change Recovery Account Requests",
+    "description": "Returns change recovery account requests",
+    "params": {
+      "start": null,
+      "limit": 10,
+      "order": "by_account"
+    }
+  },
+  "database_api.list_collateralized_conversion_requests": {
+    "label": "List Collateralized Conversion Requests",
+    "description": "Returns collateralized conversion requests",
+    "params": {
+      "start": null,
+      "limit": 10,
+      "order": "by_account"
+    }
+  },
+  "database_api.list_decline_voting_rights_requests": {
+    "label": "List Decline Voting Rights Requests",
+    "description": "Returns decline voting rights requests",
+    "params": {
+      "start": null,
+      "limit": 10,
+      "order": "by_account"
+    }
+  },
+  "database_api.list_escrows": {
+    "label": "List Escrows",
+    "description": "Returns escrows",
+    "params": {
+      "start": ["", 0],
+      "limit": 10,
+      "order": "by_from_id"
+    }
+  },
+  "database_api.list_hbd_conversion_requests": {
+    "label": "List Hbd Conversion Requests",
+    "description": "Returns HBD conversion requests",
+    "params": {
+      "start": null,
+      "limit": 10,
+      "order": "by_conversion_date"
+    }
+  },
+  "database_api.list_limit_orders": {
+    "label": "List Limit Orders",
+    "description": "Returns limit orders",
+    "params": {
+      "start": null,
+      "limit": 10,
+      "order": "by_account"
+    }
+  },
+  "database_api.list_owner_histories": {
+    "label": "List Owner Histories",
+    "description": "Returns owner histories",
+    "params": {
+      "start": null,
+      "limit": 10,
+      "order": "by_account"
+    }
+  },
+  "database_api.list_proposal_votes": {
+    "label": "List Proposal Votes",
+    "description": "Returns proposal votes",
+    "params": {
+      "start": ["", 0],
+      "limit": 10,
+      "order": "by_voter_proposal"
+    }
+  },
+  "database_api.list_proposals": {
+    "label": "List Proposals",
+    "description": "Returns proposals",
+    "params": {
+      "start": ["", 0],
+      "limit": 10,
+      "order": "by_creator",
+      "order_direction": "ascending",
+      "status": "all"
+    }
+  },
+  "database_api.list_savings_withdrawals": {
+    "label": "List Savings Withdrawals",
+    "description": "Returns savings withdrawals",
+    "params": {
+      "start": ["", 0],
+      "limit": 10,
+      "order": "by_from_id"
+    }
+  },
+  "database_api.list_vesting_delegation_expirations": {
+    "label": "List Vesting Delegation Expirations",
+    "description": "Returns vesting delegation expirations",
+    "params": {
+      "start": ["", "1970-01-01T00:00:00"],
+      "limit": 10,
+      "order": "by_expiration"
+    }
+  },
+  "database_api.list_vesting_delegations": {
+    "label": "List Vesting Delegations",
+    "description": "Returns vesting delegations",
+    "params": {
+      "start": ["", ""],
+      "limit": 10,
+      "order": "by_delegator"
+    }
+  },
+  "database_api.list_votes": {
+    "label": "List Votes",
+    "description": "Returns votes",
+    "params": {
+      "start": ["", "", ""],
+      "limit": 10,
+      "order": "by_voter_comment"
+    }
+  },
+  "database_api.list_withdraw_vesting_routes": {
+    "label": "List Withdraw Vesting Routes",
+    "description": "Returns withdraw vesting routes",
+    "params": {
+      "start": ["", 0],
+      "limit": 10,
+      "order": "by_withdraw_route"
+    }
+  },
+  "database_api.list_witness_votes": {
+    "label": "List Witness Votes",
+    "description": "Returns witness votes",
+    "params": {
+      "start": ["", ""],
+      "limit": 10,
+      "order": "by_account_witness"
+    }
+  },
+  "database_api.list_witnesses": {
+    "label": "List Witnesses",
+    "description": "Returns witnesses",
+    "params": {
+      "start": "",
+      "limit": 10,
+      "order": "by_name"
+    }
+  },
+  "database_api.verify_account_authority": {
+    "label": "Verify Account Authority",
+    "description": "Verifies account authority",
+    "params": {
+      "account": "hiveio",
+      "signers": []
+    }
+  },
+  "database_api.verify_authority": {
+    "label": "Verify Authority",
+    "description": "Verifies transaction authority",
+    "params": {
+      "trx": {}
+    }
+  },
+  "database_api.verify_signatures": {
+    "label": "Verify Signatures",
+    "description": "Verifies signatures",
+    "params": {
+      "hash": "0000000000000000000000000000000000000000",
+      "signatures": [],
+      "required_owner": [],
+      "required_active": [],
+      "required_posting": [],
+      "required_other": []
+    }
+  },
+
+  "follow_api.get_account_reputations": {
+    "label": "Get Account Reputations",
+    "description": "Returns a list of account reputations. (Supported by Hivemind)",
+    "params": {
+      "account_lower_bound": "",
+      "limit": 10
+    }
+  },
+  "follow_api.get_blog": {
+    "label": "Get Blog",
+    "description": "Returns the list of blog entries for an account. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio",
+      "start_entry_id": 0,
+      "limit": 10
+    }
+  },
+  "follow_api.get_blog_entries": {
+    "label": "Get Blog Entries",
+    "description": "Returns a list of blog entries for an account. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio",
+      "start_entry_id": 0,
+      "limit": 10
+    }
+  },
+  "follow_api.get_followers": {
+    "label": "Get Followers",
+    "description": "Returns the list of followers for an account. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio",
+      "start": "",
+      "limit": 10,
+      "type": "blog"
+    }
+  },
+  "follow_api.get_following": {
+    "label": "Get Following",
+    "description": "Returns the list of accounts that are following an account. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio",
+      "start": "",
+      "limit": 10,
+      "type": "blog"
+    }
+  },
+  "follow_api.get_follow_count": {
+    "label": "Get Follow Count",
+    "description": "Returns the count of followers/following for an account. (Supported by Hivemind)",
+    "params": {
+      "account": "hiveio"
+    }
+  },
+  "follow_api.get_reblogged_by": {
+    "label": "Get Reblogged By",
+    "description": "Returns a list of authors that have reblogged a post. (Supported by Hivemind)",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+
+  "jsonrpc.get_methods": {
+    "label": "Get Methods",
+    "description": "Returns list of available RPC methods",
+    "params": {}
+  },
+  "jsonrpc.get_signature": {
+    "label": "Get params of a method?",
+    "description": "Returns method signature",
+    "params": { "method": "database_api.list_witnesses" }
+  },
+
+  "hive.db_head_state": {
+    "label": "DB Head",
+    "description": "Gets informations about current headblock in the database.",
+    "params": {}
+  },
+  "hive.get_info": {
+    "label": "DB INFO",
+    "description": "Gets informations about current status of the hivemind node.",
+    "params": {}
+  },
+
+  "market_history_api.get_market_history": {
+    "label": "Get Market History",
+    "description": "Returns market history",
+    "params": {
+      "bucket_seconds": 3600,
+      "start": "1970-01-01T00:00:00",
+      "end": "2024-01-01T00:00:00"
+    }
+  },
+  "market_history_api.get_market_history_buckets": {
+    "label": "Get Market History Buckets",
+    "description": "Returns market history buckets",
+    "params": {}
+  },
+  "market_history_api.get_order_book": {
+    "label": "Get Order Book",
+    "description": "Returns order book",
+    "params": {
+      "limit": 10
+    }
+  },
+  "market_history_api.get_recent_trades": {
+    "label": "Get Recent Trades",
+    "description": "Returns recent trades",
+    "params": {
+      "limit": 10
+    }
+  },
+  "market_history_api.get_ticker": {
+    "label": "Get Ticker",
+    "description": "Returns market ticker",
+    "params": {}
+  },
+  "market_history_api.get_trade_history": {
+    "label": "Get Trade History",
+    "description": "Returns trade history",
+    "params": {
+      "start": "1970-01-01T00:00:00",
+      "end": "2024-01-01T00:00:00",
+      "limit": 10
+    }
+  },
+  "market_history_api.get_volume": {
+    "label": "Get Volume",
+    "description": "Returns market volume",
+    "params": {}
+  },
+  "network_broadcast_api.broadcast_transaction": {
+    "label": "Broadcast Transaction",
+    "description": "Broadcasts transaction to network",
+    "params": {
+      "signed_transaction": {
+        "ref_block_num": 0,
+        "ref_block_prefix": 0,
+        "expiration": "2024-01-01T00:00:00",
+        "operations": [],
+        "extensions": [],
+        "signatures": []
+      }
+    }
+  },
+  "node_status_api.get_node_status": {
+    "label": "Get Node Status",
+    "description": "Returns node status",
+    "params": {}
+  },
+
+  "reputation_api.get_account_reputations": {
+    "label": "Get reputation",
+    "description": "Returns the reputation of accounts.",
+    "params": {
+      "account_lower_bound": "",
+      "limit": 10
+    }
+  },
+
+  "search-api.find_text": {
+    "label": "Find Text",
+    "description": "Finds posts related to entry pattern.",
+    "params": {
+      "pattern": "hive",
+      "sort": "relevance",
+      "author": "",
+      "start_author": "",
+      "start_permlink": "",
+      "limit": 10,
+      "observer": "",
+      "truncate_body": 0
+    }
+  },
+  "tags_api.get_comment_discussions_by_payout": {
+    "label": "Get Comment Discussions By Payout",
+    "description": "Returns a list of discussions based on payout. (Supported by Hivemind)",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "tags_api.get_content_replies": {
+    "label": "Get Content Replies",
+    "description": "Returns a list of replies. (Supported by Hivemind)",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "tags_api.get_discussion": {
+    "label": "Get Discussion",
+    "description": "Returns the content (post or comment). (Supported by Hivemind)",
+    "params": {
+      "author": "hiveio",
+      "permlink": "firstpost"
+    }
+  },
+  "tags_api.get_discussions_by_author_before_date": {
+    "label": "Get Discussions By Author Before Date",
+    "description": "Returns a list of discussions based on author before date. (Supported by Hivemind)",
+    "params": {
+      "author": "hiveio",
+      "start_permlink": "",
+      "before_date": "2024-01-01T00:00:00",
+      "limit": 10
+    }
+  },
+  "tags_api.get_discussions_by_blog": {
+    "label": "Get Discussions By Blog",
+    "description": "Returns a list of discussions based on blog. (Supported by Hivemind)",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "tags_api.get_discussions_by_comments": {
+    "label": "Get Discussions By Comments",
+    "description": "Returns a list of discussions based on comments. (Supported by Hivemind)",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "tags_api.get_discussions_by_created": {
+    "label": "Get Discussions By Created",
+    "description": "Returns a list of discussions based on created timestamp. (Supported by Hivemind)",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "tags_api.get_discussions_by_hot": {
+    "label": "Get Discussions By Hot",
+    "description": "Returns a list of discussions based on recent popularity. (Supported by Hivemind)",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "tags_api.get_discussions_by_trending": {
+    "label": "Get Discussions By Trending",
+    "description": "Returns a list of discussions based on popularity. (Supported by Hivemind)",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "tags_api.get_post_discussions_by_payout": {
+    "label": "Get Post Discussions By Payout",
+    "description": "Returns a list of posts based on payout. (Supported by Hivemind)",
+    "params": {
+      "tag": "",
+      "limit": 10,
+      "start_author": "",
+      "start_permlink": ""
+    }
+  },
+  "rc_api.find_rc_accounts": {
+    "label": "Find Rc Accounts",
+    "description": "Finds RC accounts",
+    "params": {
+      "accounts": ["hiveio", "blocktrades"]
+    }
+  },
+  "rc_api.get_rc_operation_stats": {
+    "label": "Get Rc Operation Stats",
+    "description": "Returns RC operation statistics",
+    "params": { "operation": 0 }
+  },
+  "rc_api.get_rc_stats": {
+    "label": "Get Rc Stats",
+    "description": "Returns RC statistics",
+    "params": {}
+  },
+  "rc_api.get_resource_params": {
+    "label": "Get Resource Params",
+    "description": "Returns resource parameters",
+    "params": {}
+  },
+  "rc_api.get_resource_pool": {
+    "label": "Get Resource Pool",
+    "description": "Returns resource pool",
+    "params": {}
+  },
+  "rc_api.list_rc_accounts": {
+    "label": "List Rc Accounts",
+    "description": "Returns RC accounts",
+    "params": {
+      "start": null,
+      "limit": 10
+    }
+  },
+  "rc_api.list_rc_direct_delegations": {
+    "label": "List Rc Direct Delegations",
+    "description": "Returns RC direct delegations",
+    "params": {
+      "start": ["", ""],
+      "limit": 10
+    }
+  },
+  "transaction_status_api.find_transaction": {
+    "label": "Find Transaction",
+    "description": "Finds transaction by ID",
+    "params": {
+      "transaction_id": "0000000000000000000000000000000000000000"
+    }
+  }
+}

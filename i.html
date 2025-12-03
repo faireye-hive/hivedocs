@@ -1,0 +1,1249 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<title>Hive RPC Documentation & Tester</title>
+<style>
+ /* VARIÁVEIS CSS E RESET */
+ :root {
+   --primary: #1f6feb;
+   --primary-hover: #388bff;
+   --bg-primary: #0d1117;
+   --bg-secondary: #0b0f14;
+   --bg-tertiary: #161b22;
+   --text-primary: #e6edf3;
+   --text-secondary: #8b949e;
+   --text-code: #79c0ff;
+   --text-error: #ff7b72;
+   --text-success: #7ee787;
+   --border: #30363d;
+   --border-radius: 6px;
+   --transition: all 0.2s ease;
+   --sidebar-width: 300px;
+   --header-height: 60px;
+ }
+ 
+ * { 
+   box-sizing: border-box;
+   -webkit-tap-highlight-color: transparent;
+ }
+ 
+ body { 
+   margin: 0; 
+   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif; 
+   background: var(--bg-primary); 
+   color: var(--text-primary); 
+   display: flex; 
+   height: 100vh;
+   height: 100dvh; /* Para mobile browsers */
+   overflow: hidden;
+ }
+ 
+ /* TOGGLE BUTTON PARA MOBILE */
+ #mobile-toggle {
+   display: none;
+   position: fixed;
+   top: 15px;
+   left: 15px;
+   z-index: 1001;
+   background: var(--primary);
+   border: none;
+   color: white;
+   width: 40px;
+   height: 40px;
+   border-radius: 50%;
+   font-size: 20px;
+   cursor: pointer;
+   box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+ }
+ 
+ /* SIDEBAR */
+ #sidebar { 
+   width: var(--sidebar-width); 
+   background: var(--bg-secondary); 
+   border-right: 1px solid var(--border); 
+   display: flex; 
+   flex-direction: column; 
+   flex-shrink: 0;
+   transition: transform 0.3s ease;
+   z-index: 1000;
+ }
+ 
+ .sidebar-header { 
+   padding: 20px 15px;
+   border-bottom: 1px solid var(--border);
+   flex-shrink: 0;
+ }
+ 
+ .sidebar-header h2 { 
+   margin: 0; 
+   font-size: 18px; 
+   color: var(--text-primary);
+   line-height: 1.3;
+ }
+ 
+ .sidebar-header p { 
+   margin: 8px 0 0; 
+   font-size: 12px; 
+   color: var(--text-secondary); 
+   line-height: 1.4;
+ }
+ 
+ #endpoint-selector { 
+   width: 100%; 
+   margin-top: 12px; 
+   padding: 10px 12px; 
+   background: var(--bg-tertiary); 
+   border: 1px solid var(--border); 
+   border-radius: var(--border-radius); 
+   color: var(--text-primary); 
+   font-size: 14px; 
+   -webkit-appearance: none;
+   appearance: none;
+ }
+ 
+ #search-input { 
+   width: 100%; 
+   margin: 12px 0; 
+   padding: 10px 12px; 
+   background: var(--bg-tertiary); 
+   border: 1px solid var(--border); 
+   border-radius: var(--border-radius); 
+   color: var(--text-primary); 
+   font-size: 14px; 
+ }
+ 
+ #menu-container { 
+   flex: 1; 
+   overflow-y: auto; 
+   padding: 0 15px 20px; 
+   -webkit-overflow-scrolling: touch;
+ }
+ 
+ .api-group { 
+   margin-bottom: 20px; 
+ }
+ 
+ .api-group h3 { 
+   font-size: 11px; 
+   margin: 0 0 8px; 
+   color: var(--text-code); 
+   text-transform: uppercase; 
+   letter-spacing: 0.5px; 
+   font-weight: 600; 
+   padding: 8px 0; 
+   border-bottom: 1px solid var(--border); 
+   position: sticky;
+   top: 0;
+   background: var(--bg-secondary);
+   z-index: 1;
+ }
+ 
+ .method-list { 
+   list-style: none; 
+   padding: 0; 
+   margin: 0; 
+ }
+ 
+ .method-list li { 
+   padding: 12px 10px; 
+   cursor: pointer; 
+   border-radius: var(--border-radius); 
+   font-size: 14px; 
+   color: var(--text-secondary); 
+   transition: var(--transition); 
+   margin-bottom: 3px; 
+   display: flex; 
+   align-items: center;
+   touch-action: manipulation;
+ }
+ 
+ .method-list li:hover { 
+   background: var(--bg-tertiary); 
+   color: var(--text-primary); 
+ }
+ 
+ .method-list li.active { 
+   background: var(--primary); 
+   color: white; 
+ }
+ 
+ .method-list li .method-badge { 
+   margin-left: auto; 
+   background: rgba(255,255,255,0.1); 
+   padding: 3px 8px; 
+   border-radius: 4px; 
+   font-size: 10px; 
+   font-family: 'Courier New', monospace; 
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
+   max-width: 80px;
+ }
+ 
+ /* OVERLAY PARA MOBILE */
+ #sidebar-overlay {
+   display: none;
+   position: fixed;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   background: rgba(0,0,0,0.5);
+   z-index: 999;
+ }
+ 
+ /* CONTEÚDO PRINCIPAL */
+ #content { 
+   flex: 1; 
+   display: flex; 
+   flex-direction: column; 
+   overflow: hidden; 
+   min-width: 0; /* Para evitar overflow */
+ }
+ 
+ .content-header { 
+   padding: 20px 20px 15px;
+   border-bottom: 1px solid var(--border); 
+   flex-shrink: 0; 
+ }
+ 
+ .content-header h1 { 
+   margin: 0 0 8px; 
+   font-size: 24px; 
+   line-height: 1.3;
+ }
+ 
+ .method-header { 
+   display: flex; 
+   align-items: center; 
+   gap: 10px; 
+   margin-bottom: 12px;
+   flex-wrap: wrap;
+ }
+ 
+ .method-tag { 
+   font-family: 'Courier New', Courier, monospace; 
+   background: var(--bg-tertiary); 
+   color: var(--text-code); 
+   padding: 6px 12px; 
+   border-radius: var(--border-radius); 
+   border: 1px solid var(--border); 
+   font-size: 12px; 
+   line-height: 1.3;
+   word-break: break-all;
+   max-width: 100%;
+ }
+ 
+ .method-description { 
+   font-size: 14px; 
+   line-height: 1.6; 
+   color: var(--text-secondary); 
+   margin: 0; 
+ }
+ 
+ .content-body { 
+   flex: 1; 
+   padding: 20px; 
+   overflow-y: auto; 
+   -webkit-overflow-scrolling: touch;
+ }
+ 
+ .section { 
+   margin-bottom: 25px; 
+ }
+ 
+ .section-title { 
+   font-size: 16px; 
+   margin: 0 0 12px; 
+   color: var(--text-primary); 
+   font-weight: 600; 
+   line-height: 1.3;
+ }
+ 
+ /* EDITOR DE CÓDIGO */
+ .code-editor { 
+   position: relative; 
+   margin-bottom: 15px; 
+ }
+ 
+ .editor-header { 
+   display: flex; 
+   justify-content: space-between; 
+   align-items: center; 
+   margin-bottom: 8px;
+   flex-wrap: wrap;
+   gap: 8px;
+ }
+ 
+ .editor-actions { 
+   display: flex; 
+   gap: 8px; 
+   flex-wrap: wrap;
+ }
+ 
+ .code-editor textarea { 
+   width: 100%; 
+   min-height: 180px; 
+   max-height: 400px;
+   background: var(--bg-tertiary); 
+   border: 1px solid var(--border); 
+   border-radius: var(--border-radius); 
+   padding: 15px; 
+   color: var(--text-primary); 
+   font-family: 'Courier New', Courier, monospace; 
+   font-size: 13px; 
+   line-height: 1.5; 
+   resize: vertical; 
+   tab-size: 2; 
+   -webkit-overflow-scrolling: touch;
+ }
+ 
+ .code-editor textarea:focus { 
+   outline: none; 
+   border-color: var(--primary); 
+ }
+ 
+ /* BOTÕES */
+ .btn { 
+   padding: 10px 16px; 
+   border-radius: var(--border-radius); 
+   border: none; 
+   font-weight: 600; 
+   font-size: 14px; 
+   cursor: pointer; 
+   transition: var(--transition); 
+   display: inline-flex; 
+   align-items: center; 
+   justify-content: center;
+   gap: 6px; 
+   min-height: 44px; /* Tamanho mínimo para touch */
+   touch-action: manipulation;
+   user-select: none;
+   flex-shrink: 0;
+ }
+ 
+ .btn-primary { 
+   background: var(--primary); 
+   color: white; 
+   flex: 1;
+   min-width: 120px;
+ }
+ 
+ .btn-primary:hover:not(:disabled),
+ .btn-primary:active:not(:disabled) { 
+   background: var(--primary-hover); 
+ }
+ 
+ .btn-secondary { 
+   background: var(--bg-tertiary); 
+   color: var(--text-primary); 
+   border: 1px solid var(--border); 
+   flex: 1;
+   min-width: 100px;
+ }
+ 
+ .btn-secondary:hover,
+ .btn-secondary:active { 
+   background: #21262d; 
+ }
+ 
+ .btn:disabled { 
+   opacity: 0.5; 
+   cursor: not-allowed; 
+ }
+ 
+ /* GRUPO DE BOTÕES */
+ .button-group {
+   display: flex;
+   gap: 10px;
+   flex-wrap: wrap;
+   margin-top: 15px;
+ }
+ 
+ .button-group .btn {
+   flex: 1;
+   min-width: calc(50% - 5px);
+ }
+ 
+ /* RESULTADO */
+ #result-container { 
+   position: relative; 
+ }
+ 
+ #result-block { 
+   min-height: 180px; 
+   max-height: 400px; 
+   overflow-y: auto; 
+   background: var(--bg-tertiary); 
+   padding: 15px; 
+   border-radius: var(--border-radius); 
+   border: 1px solid var(--border); 
+   font-family: 'Courier New', Courier, monospace; 
+   font-size: 12px; 
+   line-height: 1.5; 
+   white-space: pre-wrap; 
+   word-break: break-word; 
+   margin: 0; 
+   -webkit-overflow-scrolling: touch;
+ }
+ 
+ .result-success { 
+   color: var(--text-success); 
+ }
+ 
+ .result-error { 
+   color: var(--text-error); 
+ }
+ 
+ /* LOADER */
+ .loader { 
+   display: inline-block; 
+   width: 16px; 
+   height: 16px; 
+   border: 2px solid rgba(255,255,255,0.3); 
+   border-radius: 50%; 
+   border-top-color: white; 
+   animation: spin 1s ease-in-out infinite; 
+ }
+ 
+ @keyframes spin { 
+   to { transform: rotate(360deg); } 
+ }
+ 
+ /* RESPONSIVIDADE - TABLET */
+ @media (max-width: 1024px) {
+   :root {
+     --sidebar-width: 280px;
+   }
+   
+   .content-header h1 {
+     font-size: 22px;
+   }
+   
+   .method-tag {
+     font-size: 11px;
+     padding: 5px 10px;
+   }
+ }
+ 
+ /* RESPONSIVIDADE - MOBILE */
+ @media (max-width: 768px) {
+   body {
+     flex-direction: column;
+     height: auto;
+     min-height: 100vh;
+     min-height: 100dvh;
+     overflow-y: auto;
+   }
+   
+   #mobile-toggle {
+     display: block;
+   }
+   
+   #sidebar {
+     position: fixed;
+     top: 0;
+     left: 0;
+     bottom: 0;
+     width: 85%;
+     max-width: 320px;
+     transform: translateX(-100%);
+     box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+     border-right: none;
+   }
+   
+   #sidebar.sidebar-open {
+     transform: translateX(0);
+   }
+   
+   #sidebar-overlay.sidebar-open {
+     display: block;
+   }
+   
+   #content {
+     width: 100%;
+     min-height: 100vh;
+     min-height: 100dvh;
+   }
+   
+   .content-header {
+     padding: 70px 15px 15px; /* Espaço para o botão toggle */
+   }
+   
+   .content-header h1 {
+     font-size: 20px;
+     margin-bottom: 10px;
+   }
+   
+   .content-body {
+     padding: 15px;
+   }
+   
+   .method-header {
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 8px;
+   }
+   
+   .method-tag {
+     width: 100%;
+     font-size: 11px;
+     padding: 8px 12px;
+   }
+   
+   .method-description {
+     font-size: 14px;
+   }
+   
+   .section {
+     margin-bottom: 20px;
+   }
+   
+   .section-title {
+     font-size: 15px;
+     margin-bottom: 10px;
+   }
+   
+   .editor-header {
+     flex-direction: column;
+     align-items: flex-start;
+     gap: 10px;
+   }
+   
+   .editor-actions {
+     width: 100%;
+     justify-content: space-between;
+   }
+   
+   .editor-actions .btn {
+     flex: 1;
+     font-size: 13px;
+     padding: 10px 12px;
+   }
+   
+   .code-editor textarea {
+     min-height: 150px;
+     font-size: 12px;
+     padding: 12px;
+   }
+   
+   .button-group {
+     flex-direction: column;
+     gap: 10px;
+   }
+   
+   .button-group .btn {
+     min-width: 100%;
+     width: 100%;
+   }
+   
+   #result-block {
+     min-height: 150px;
+     font-size: 11px;
+     padding: 12px;
+   }
+   
+   .btn {
+     padding: 12px 16px;
+     font-size: 14px;
+   }
+   
+   /* Ajuste para telas muito pequenas */
+   @media (max-width: 360px) {
+     .content-header h1 {
+       font-size: 18px;
+     }
+     
+     .method-tag {
+       font-size: 10px;
+       padding: 6px 10px;
+     }
+     
+     .btn {
+       padding: 10px 12px;
+       font-size: 13px;
+     }
+     
+     .editor-actions .btn {
+       padding: 8px 10px;
+       font-size: 12px;
+     }
+   }
+   
+   /* Ajuste para landscape */
+   @media (max-height: 600px) and (orientation: landscape) {
+     #sidebar {
+       width: 60%;
+     }
+     
+     .content-header {
+       padding-top: 60px;
+     }
+     
+     .code-editor textarea {
+       min-height: 120px;
+     }
+     
+     #result-block {
+       min-height: 120px;
+     }
+   }
+ }
+ 
+ /* RESPONSIVIDADE - DESKTOP PEQUENO */
+ @media (min-width: 769px) and (max-width: 1024px) {
+   .content-header {
+     padding: 20px 25px 15px;
+   }
+   
+   .content-body {
+     padding: 25px;
+   }
+   
+   .method-header {
+     gap: 12px;
+   }
+ }
+ 
+ /* ANIMAÇÕES */
+ @keyframes slideIn {
+   from { transform: translateX(100%); opacity: 0; }
+   to { transform: translateX(0); opacity: 1; }
+ }
+ 
+ @keyframes slideOut {
+   from { transform: translateX(0); opacity: 1; }
+   to { transform: translateX(100%); opacity: 0; }
+ }
+ 
+ /* TOAST */
+ .toast {
+   position: fixed;
+   top: 20px;
+   right: 20px;
+   background: var(--primary);
+   color: white;
+   padding: 12px 20px;
+   border-radius: var(--border-radius);
+   z-index: 2000;
+   font-size: 14px;
+   animation: slideIn 0.3s ease;
+   max-width: calc(100% - 40px);
+   word-break: break-word;
+ }
+ 
+ .toast.toast-error {
+   background: #f85149;
+ }
+ 
+ .toast.toast-success {
+   background: #238636;
+ }
+ 
+ .toast.toast-info {
+   background: #1f6feb;
+ }
+ 
+ /* SCROLLBAR PERSONALIZADA */
+ ::-webkit-scrollbar {
+   width: 8px;
+   height: 8px;
+ }
+ 
+ ::-webkit-scrollbar-track {
+   background: var(--bg-secondary);
+ }
+ 
+ ::-webkit-scrollbar-thumb {
+   background: var(--border);
+   border-radius: 4px;
+ }
+ 
+ ::-webkit-scrollbar-thumb:hover {
+   background: #444d56;
+ }
+ 
+ /* AJUSTES PARA INPUT EM MOBILE */
+ input, textarea, select {
+   font-size: 16px !important; /* Evita zoom no iOS */
+ }
+ 
+ @media screen and (max-width: 768px) {
+   input, textarea, select {
+     font-size: 14px !important;
+   }
+ }
+</style>
+</head>
+<body>
+
+<!-- BOTÃO TOGGLE PARA MOBILE -->
+<button id="mobile-toggle" aria-label="Toggle menu">☰</button>
+
+<!-- OVERLAY PARA MOBILE -->
+<div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+<!-- SIDEBAR -->
+<div id="sidebar">
+  <div class="sidebar-header">
+    <h2>Hive RPC API</h2>
+    <p>Documentação completa e testador de endpoints</p>
+    
+    <select id="endpoint-selector">
+      <option value="https://api.hive.blog">Hive.blog (Principal)</option>
+      <option value="https://rpc.ecency.com">Ecency</option>
+      <option value="https://hive-api.arcange.eu">Arcange.eu</option>
+      <option value="https://api.deathwing.me">Deathwing.me</option>
+      <option value="custom">Personalizado...</option>
+    </select>
+    
+    <input 
+      type="text" 
+      id="search-input" 
+      placeholder="Buscar método (ex: get_accounts)" 
+      autocomplete="off"
+    />
+  </div>
+  
+  <div id="menu-container">
+    <!-- Menu será gerado dinamicamente -->
+  </div>
+</div>
+
+<!-- CONTEÚDO PRINCIPAL -->
+<div id="content">
+  <div class="content-header">
+    <h1>Bem-vindo à API Hive</h1>
+    <div class="method-header" id="method-header" style="display: none;">
+      <div class="method-tag" id="method-name"></div>
+      <div class="method-tag" id="api-group"></div>
+    </div>
+    <p class="method-description" id="description">
+      Selecione um método na barra lateral para ver detalhes e testar.
+      Use o campo de busca para filtrar métodos.
+    </p>
+  </div>
+  
+  <div class="content-body">
+    <div id="params-container" style="display: none;">
+      <!-- PARÂMETROS -->
+      <div class="section">
+        <h3 class="section-title">Parâmetros da Requisição</h3>
+        <div class="code-editor">
+          <div class="editor-header">
+            <span>JSON-RPC Request</span>
+            <div class="editor-actions">
+              <button class="btn btn-secondary" onclick="formatJSON('request-editor')">
+                <span>Formatar</span>
+              </button>
+              <button class="btn btn-secondary" onclick="copyToClipboard('request-editor')">
+                <span>Copiar</span>
+              </button>
+            </div>
+          </div>
+          <textarea 
+            id="request-editor" 
+            spellcheck="false"
+            placeholder='{
+  "jsonrpc": "2.0",
+  "method": "database_api.get_config",
+  "params": {},
+  "id": 1
+}'
+          ></textarea>
+        </div>
+        
+        <div class="button-group">
+          <button id="execute-button" class="btn btn-primary" disabled>
+            <span id="execute-text">Executar Requisição</span>
+            <span id="execute-loader" class="loader" style="display: none;"></span>
+          </button>
+          <button class="btn btn-secondary" onclick="resetToDefault()">
+            Restaurar Padrão
+          </button>
+          <button class="btn btn-secondary" onclick="toggleExampleData()">
+            <span id="toggle-example">Mostrar</span> Dados de Exemplo
+          </button>
+        </div>
+      </div>
+      
+      <!-- EXEMPLO DE RESPOSTA -->
+      <div class="section" id="example-section" style="display: none;">
+        <h3 class="section-title">Resposta de Exemplo</h3>
+        <pre id="example-block" class="code-block"></pre>
+      </div>
+      
+      <!-- RESULTADO -->
+      <div class="section">
+        <h3 class="section-title">Resultado da API</h3>
+        <div id="result-container">
+          <div class="editor-header">
+            <span>Resposta JSON</span>
+            <div class="editor-actions">
+              <button class="btn btn-secondary" onclick="copyToClipboard('result-block')">
+                Copiar Resultado
+              </button>
+              <button class="btn btn-secondary" onclick="clearResult()">
+                Limpar
+              </button>
+            </div>
+          </div>
+          <pre id="result-block">Selecione um método e clique em Executar.</pre>
+        </div>
+        
+        <div id="response-info" style="margin-top: 15px; font-size: 12px; color: var(--text-secondary);">
+          <span id="response-time"></span>
+          <span id="response-size" style="margin-left: 15px;"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+class HiveRPCTester {
+  constructor() {
+    this.menuData = {};
+    this.methodInfo = {};
+    this.currentMethod = null;
+    this.isMobile = window.innerWidth <= 768;
+    this.init();
+  }
+
+  async init() {
+    await this.loadData();
+    this.setupEventListeners();
+    this.setupMobileEvents();
+    this.renderMenu();
+    this.loadFromStorage();
+    
+    // Detectar mudança de tamanho da tela
+    window.addEventListener('resize', () => {
+      this.isMobile = window.innerWidth <= 768;
+    });
+  }
+
+  async loadData() {
+    try {
+      const response = await fetch('dados.json');
+      if (!response.ok) throw new Error('Arquivo não encontrado');
+      
+      this.menuData = await response.json();
+      
+      if (Object.keys(this.menuData).length === 0) {
+        this.menuData = this.getExampleData();
+      }
+    } catch (error) {
+      console.warn('Usando dados de exemplo:', error);
+      this.menuData = this.getExampleData();
+    }
+    
+    Object.entries(this.menuData).forEach(([key, data]) => {
+      this.methodInfo[key] = {
+        ...data,
+        methodKey: key,
+        apiGroup: key.split('.')[0]
+      };
+    });
+  }
+
+  getExampleData() {
+    return {
+      "database_api.get_config": {
+        "label": "Get Config",
+        "description": "Retorna configurações globais do nó Hive.",
+        "params": {},
+        "example_response": {
+          "jsonrpc": "2.0",
+          "result": {
+            "HIVE_CHAIN_ID": "beeab0de00000000000000000000000000000000000000000000000000000000",
+            "HIVE_BLOCKCHAIN_VERSION": "0.23.0"
+          },
+          "id": 1
+        }
+      }
+    };
+  }
+
+  renderMenu() {
+    const container = document.getElementById('menu-container');
+    container.innerHTML = '';
+    
+    const groups = {};
+    const searchTerm = document.getElementById('search-input').value.toLowerCase();
+    
+    Object.values(this.methodInfo).forEach(method => {
+      if (searchTerm && !method.label.toLowerCase().includes(searchTerm) && 
+          !method.methodKey.toLowerCase().includes(searchTerm)) {
+        return;
+      }
+      
+      if (!groups[method.apiGroup]) {
+        groups[method.apiGroup] = [];
+      }
+      groups[method.apiGroup].push(method);
+    });
+    
+    Object.entries(groups).forEach(([groupName, methods]) => {
+      const groupDiv = document.createElement('div');
+      groupDiv.className = 'api-group';
+      
+      const title = document.createElement('h3');
+      title.textContent = groupName.replace(/_/g, ' ');
+      groupDiv.appendChild(title);
+      
+      const ul = document.createElement('ul');
+      ul.className = 'method-list';
+      
+      methods.sort((a, b) => a.label.localeCompare(b.label)).forEach(method => {
+        const li = document.createElement('li');
+        li.textContent = method.label;
+        li.dataset.method = method.methodKey;
+        
+        const badge = document.createElement('span');
+        badge.className = 'method-badge';
+        badge.textContent = method.methodKey.split('.')[1]?.substring(0, 10) + '...' || '';
+        li.appendChild(badge);
+        
+        li.addEventListener('click', (e) => {
+          this.loadMethod(method.methodKey);
+          if (this.isMobile) {
+            this.closeSidebar();
+          }
+          e.stopPropagation();
+        });
+        
+        ul.appendChild(li);
+      });
+      
+      groupDiv.appendChild(ul);
+      container.appendChild(groupDiv);
+    });
+    
+    if (Object.keys(groups).length === 0) {
+      container.innerHTML = '<p style="text-align: center; color: var(--text-secondary); padding: 20px;">Nenhum método encontrado.</p>';
+    }
+  }
+
+  loadMethod(methodKey) {
+    const method = this.methodInfo[methodKey];
+    if (!method) return;
+    
+    this.currentMethod = method;
+    
+    document.querySelectorAll('.method-list li').forEach(li => {
+      li.classList.remove('active');
+    });
+    
+    document.querySelector(`.method-list li[data-method="${methodKey}"]`)?.classList.add('active');
+    
+    document.getElementById('method-header').style.display = 'flex';
+    document.getElementById('method-name').textContent = methodKey;
+    document.getElementById('api-group').textContent = method.apiGroup;
+    document.getElementById('description').textContent = method.description;
+    document.getElementById('params-container').style.display = 'block';
+    
+    const requestId = 1;
+    const request = {
+      jsonrpc: "2.0",
+      method: methodKey,
+      params: method.params || {},
+      id: requestId
+    };
+    
+    const editor = document.getElementById('request-editor');
+    editor.value = JSON.stringify(request, null, 2);
+    
+    const executeBtn = document.getElementById('execute-button');
+    executeBtn.disabled = false;
+    executeBtn.onclick = () => this.executeRequest();
+    
+    this.toggleExampleResponse(method);
+    this.saveToStorage(methodKey);
+    document.querySelector('.content-body').scrollTop = 0;
+  }
+
+  toggleExampleResponse(method) {
+    const exampleSection = document.getElementById('example-section');
+    const exampleBlock = document.getElementById('example-block');
+    const toggleBtn = document.getElementById('toggle-example');
+    
+    if (method.example_response) {
+      exampleSection.style.display = 'block';
+      exampleBlock.textContent = JSON.stringify(method.example_response, null, 2);
+      toggleBtn.textContent = 'Ocultar';
+    } else {
+      exampleSection.style.display = 'none';
+      toggleBtn.textContent = 'Mostrar';
+    }
+  }
+
+  async executeRequest() {
+    const executeBtn = document.getElementById('execute-button');
+    const executeText = document.getElementById('execute-text');
+    const executeLoader = document.getElementById('execute-loader');
+    const resultBlock = document.getElementById('result-block');
+    const responseTime = document.getElementById('response-time');
+    const responseSize = document.getElementById('response-size');
+    
+    let request;
+    try {
+      request = JSON.parse(document.getElementById('request-editor').value);
+    } catch (error) {
+      resultBlock.textContent = `❌ JSON Inválido: ${error.message}`;
+      resultBlock.className = 'result-error';
+      return;
+    }
+    
+    executeBtn.disabled = true;
+    executeText.textContent = 'Executando...';
+    executeLoader.style.display = 'inline-block';
+    resultBlock.textContent = 'Conectando...';
+    resultBlock.className = '';
+    
+    const endpoint = document.getElementById('endpoint-selector').value;
+    const startTime = performance.now();
+    
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 30000);
+      
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(request),
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      
+      const endTime = performance.now();
+      const duration = (endTime - startTime).toFixed(0);
+      
+      const data = await response.json();
+      const dataSize = new Blob([JSON.stringify(data)]).size;
+      
+      resultBlock.textContent = JSON.stringify(data, null, 2);
+      resultBlock.className = data.error ? 'result-error' : 'result-success';
+      
+      responseTime.textContent = `⏱️ ${duration}ms`;
+      responseSize.textContent = `📦 ${this.formatBytes(dataSize)}`;
+      responseTime.style.color = duration < 200 ? 'var(--text-success)' : 
+                                 duration < 500 ? '#ffa657' : 'var(--text-error)';
+      
+    } catch (error) {
+      resultBlock.textContent = error.name === 'AbortError' 
+        ? '❌ Timeout: A requisição demorou muito'
+        : `❌ Erro: ${error.message}`;
+      resultBlock.className = 'result-error';
+      responseTime.textContent = '';
+      responseSize.textContent = '';
+    } finally {
+      executeBtn.disabled = false;
+      executeText.textContent = 'Executar Requisição';
+      executeLoader.style.display = 'none';
+    }
+  }
+
+  setupEventListeners() {
+    document.getElementById('search-input').addEventListener('input', () => {
+      this.renderMenu();
+    });
+    
+    document.getElementById('endpoint-selector').addEventListener('change', (e) => {
+      if (e.target.value === 'custom') {
+        const customUrl = prompt('Digite a URL do endpoint personalizado:');
+        if (customUrl) {
+          const option = document.createElement('option');
+          option.value = customUrl;
+          option.textContent = `Personalizado: ${customUrl.substring(0, 30)}...`;
+          e.target.appendChild(option);
+          e.target.value = customUrl;
+        } else {
+          e.target.value = 'https://api.hive.blog';
+        }
+      }
+    });
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.ctrlKey && e.key === 'Enter') {
+        const executeBtn = document.getElementById('execute-button');
+        if (!executeBtn.disabled) {
+          executeBtn.click();
+        }
+      }
+      
+      if (e.ctrlKey && e.key === 'f') {
+        e.preventDefault();
+        document.getElementById('search-input').focus();
+      }
+      
+      if (e.key === 'Escape') {
+        if (this.isMobile && document.getElementById('sidebar').classList.contains('sidebar-open')) {
+          this.closeSidebar();
+        } else {
+          document.getElementById('search-input').value = '';
+          this.renderMenu();
+        }
+      }
+    });
+    
+    document.getElementById('request-editor').addEventListener('blur', function() {
+      try {
+        const parsed = JSON.parse(this.value);
+        this.value = JSON.stringify(parsed, null, 2);
+      } catch {
+        // Mantém como está se não for JSON válido
+      }
+    });
+    
+    // Prevenir zoom duplo-tap em mobile
+    let lastTouchEnd = 0;
+    document.addEventListener('touchend', (e) => {
+      const now = Date.now();
+      if (now - lastTouchEnd <= 300) {
+        e.preventDefault();
+      }
+      lastTouchEnd = now;
+    }, { passive: false });
+  }
+
+  setupMobileEvents() {
+    const toggleBtn = document.getElementById('mobile-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    
+    toggleBtn.addEventListener('click', () => {
+      sidebar.classList.toggle('sidebar-open');
+      overlay.classList.toggle('sidebar-open');
+      toggleBtn.textContent = sidebar.classList.contains('sidebar-open') ? '✕' : '☰';
+    });
+    
+    overlay.addEventListener('click', () => {
+      this.closeSidebar();
+    });
+    
+    // Fechar sidebar ao clicar em um link (já tratado no loadMethod)
+  }
+
+  closeSidebar() {
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
+    const toggleBtn = document.getElementById('mobile-toggle');
+    
+    sidebar.classList.remove('sidebar-open');
+    overlay.classList.remove('sidebar-open');
+    toggleBtn.textContent = '☰';
+  }
+
+  formatBytes(bytes) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const sizes = ['Bytes', 'KB', 'MB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+  }
+
+  saveToStorage(methodKey) {
+    localStorage.setItem('hive_rpc_last_method', methodKey);
+    localStorage.setItem('hive_rpc_endpoint', document.getElementById('endpoint-selector').value);
+  }
+
+  loadFromStorage() {
+    const lastMethod = localStorage.getItem('hive_rpc_last_method');
+    const endpoint = localStorage.getItem('hive_rpc_endpoint');
+    
+    if (endpoint) {
+      document.getElementById('endpoint-selector').value = endpoint;
+    }
+    
+    if (lastMethod && this.methodInfo[lastMethod]) {
+      setTimeout(() => this.loadMethod(lastMethod), 100);
+    }
+  }
+}
+
+// FUNÇÕES GLOBAIS
+function formatJSON(editorId) {
+  const editor = document.getElementById(editorId);
+  try {
+    const parsed = JSON.parse(editor.value);
+    editor.value = JSON.stringify(parsed, null, 2);
+    showToast('JSON formatado com sucesso!', 'success');
+  } catch (error) {
+    showToast(`Erro ao formatar JSON: ${error.message}`, 'error');
+  }
+}
+
+function copyToClipboard(elementId) {
+  const element = document.getElementById(elementId);
+  const text = element.tagName === 'TEXTAREA' ? element.value : element.textContent;
+  
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Copiado para área de transferência!', 'success');
+  }).catch(err => {
+    showToast('Erro ao copiar: ' + err, 'error');
+  });
+}
+
+function clearResult() {
+  document.getElementById('result-block').textContent = '';
+  document.getElementById('response-time').textContent = '';
+  document.getElementById('response-size').textContent = '';
+}
+
+function resetToDefault() {
+  if (window.tester?.currentMethod) {
+    window.tester.loadMethod(window.tester.currentMethod.methodKey);
+    showToast('Requisição restaurada para padrão', 'info');
+  }
+}
+
+function toggleExampleData() {
+  const section = document.getElementById('example-section');
+  const toggleBtn = document.getElementById('toggle-example');
+  
+  if (section.style.display === 'none') {
+    section.style.display = 'block';
+    toggleBtn.textContent = 'Ocultar';
+  } else {
+    section.style.display = 'none';
+    toggleBtn.textContent = 'Mostrar';
+  }
+}
+
+function showToast(message, type = 'info') {
+  const existing = document.querySelector('.toast');
+  if (existing) existing.remove();
+  
+  const toast = document.createElement('div');
+  toast.className = `toast toast-${type}`;
+  toast.textContent = message;
+  toast.setAttribute('role', 'alert');
+  toast.setAttribute('aria-live', 'assertive');
+  
+  document.body.appendChild(toast);
+  
+  setTimeout(() => {
+    toast.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => toast.remove(), 300);
+  }, 3000);
+}
+
+// INICIALIZAÇÃO
+document.addEventListener('DOMContentLoaded', () => {
+  window.tester = new HiveRPCTester();
+  
+  // Adicionar classe para pré-carregamento
+  document.body.classList.add('loaded');
+  
+  // Detectar se é um dispositivo touch
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    document.body.classList.add('touch-device');
+  }
+});
+</script>
+</body>
+</html>
